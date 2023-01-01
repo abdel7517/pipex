@@ -14,8 +14,16 @@
 
 int	main(int argc, char **argv)
 {
-	(void)argc;
-	(void)argv;
-	ft_printf("OKIDOKI\n");
+	int	i;
+
+	i = 1;
+	if (argc >= 5)
+	{
+		while (i < argc)
+		{
+			ft_printf("%s\n", argv[i]);
+			i++;
+		}
+	}
 	return (0);
 }
