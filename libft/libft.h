@@ -52,6 +52,6 @@ int					ft_isascii(int c);
 int					ft_isprint(int c);
 int					ft_toupper(int c);
 int					ft_tolower(int c);
-long long int		ft_atoi(const char *nptr);
+int					ft_atoi(const char *nptr);
 
 #endif
