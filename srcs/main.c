@@ -11,18 +11,46 @@
 /* ************************************************************************** */
 
 #include "./pipex.h"
+#include <time.h>
 
-int	main(int argc, char **argv)
+int	main(int argc, char **argv, char **envp)
 {
-	int	i;
+	pid_t	pid;
+	int		error;
+	int		wait_status;
+	int		status_code;
+	int		file;
+	int		i;
 
-	i = 1;
-	if (argc >= 5)
+	i = 0;
+	while (envp[i])
 	{
-		while (i < argc)
+		printf("%s\n", envp[i++]);
+	}
+
+	(void)argc;
+	pid = fork();
+	if (pid == -1)
+		return (1);
+	if (pid == 0)
+	{
+		file = open("result.txt", O_WRONLY | O_CREAT, 0777);
+		if (file == -1)
+			return (2);
+		error = execve("/usr/bin/ls", argv, envp);
+		if (error == -1)
+			return (printf("Could not find program to execute.\n"), 0);
+	}
+	else
+	{
+		wait(&wait_status);
+		if (WIFEXITED(wait_status))
 		{
-			ft_printf("%s\n", argv[i]);
-			i++;
+			status_code = WEXITSTATUS(wait_status);
+			if (status_code == 0)
+				printf("SUCCESS\n");
+			else
+				printf("Failure with status code %d\n", status_code);
 		}
 	}
 	return (0);
