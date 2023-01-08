@@ -33,11 +33,14 @@ typedef struct s_pipex
 	char	**cmd_args;
 	char	*envp;
 	char	*cmd;
+	int		pipes[][2];
+	int		*pids;
 	int		here_doc;
 	int		infile;
 	int		outfile;
 	int		nb_cmd;
-	int		nb_pipe;
+	int		nb_pipes;
+	int		nb_pids;
 	int		index;
 
 }	t_pipex;
