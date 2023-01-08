@@ -41,7 +41,77 @@ void	init(t_pipex *data)
 	}
 }
 
-int	pipex(int infile)
+
+int	check_access(char **paths_splited, char *cmd, char **env)
+{
+	int		i;
+	char	*path;
+	char	*cmd_path;
+	char	**arg;
+
+	arg = NULL;
+	i = 0;
+	while (paths_splited[i])
+	{
+		path = ft_strjoin(paths_splited[i], "/");
+		cmd_path = ft_strjoin(path, cmd);
+		if (access(cmd_path, X_OK) == 0)
+		{
+
+			execve(cmd_path, arg, env);
+			ex_err(cmd_path);
+		}
+		free(cmd_path);
+		free(path);
+		i++;
+	}
+	return (-1);
+}
+
+int	check_path(char *path, char *cmd, char **env)
+{
+	char	**paths_splited;
+	char	*paths;
+
+	paths = ft_substr(path, 5, ft_strlen(path) - 5);
+	if (paths == NULL)
+		return (-1);
+	paths_splited = ft_split(paths, ':');
+	if (check_access(paths_splited, cmd, env) == -1)
+		return (/* free_split(paths_splited),  */free(paths), -1);
+	// free_split(paths_splited);
+	free(paths);
+	return (0);
+}
+
+int	find_path(char **env, char *cmd)
+{
+	int		i;
+
+	i = 0;
+	while (env[i])
+	{
+		if (ft_strncmp(env[i], "PATH=", 5) == 0)
+		{
+			if (check_path(env[i], cmd, env) == -1)
+				return (-1);
+			return (0);
+		}
+		i++;
+	}
+	return (-1);
+}
+
+void	exec(char *cmd, char **env)
+{
+
+	if (ft_strchr(cmd, '/') == NULL)
+	{
+		find_path(env, cmd);
+	}
+}
+
+int	pipex(int infile, char *cmd, char **env)
 {
 	pid_t	pid;
 	int		fd[2];
@@ -55,8 +125,8 @@ int	pipex(int infile)
 		if (STDIN_FILENO == infile)
 			exit(1);
 		else
-			execlp("ping", "ping", "-c", "1", "google.com", NULL);
-		return(-1);
+			exec(cmd, env);
+		return (-1);
 	}
 	else
 	{
@@ -85,13 +155,12 @@ int	main(int argc, char **argv, char **envp)
 	data.nb_cmd = argc - 2 - data.here_doc;
 	dup2(data.infile, STDIN_FILENO);
 	dup2(data.outfile, STDOUT_FILENO);
-	pipex(data.infile);
+	pipex(data.infile, argv[2], envp);
 	while (i < data.nb_cmd)
 	{
-		pipex(data.infile);
+		pipex(data.infile, argv[i], envp);
 		i++;
 	}
-	execlp("ping", "ping", "-c", "1", "google.com", NULL);
-	ft_error("TEST2");
+	exec(argv[data.nb_cmd], envp);
 	return (0);
 }
