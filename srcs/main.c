@@ -72,13 +72,21 @@ int	check_path(char *path, char *cmd, char **env)
 {
 	char	**paths_splited;
 	char	*paths;
+	char 	*message_error;
 
 	paths = ft_substr(path, 5, ft_strlen(path) - 5);
 	if (paths == NULL)
 		return (-1);
 	paths_splited = ft_split(paths, ':');
 	if (check_access(paths_splited, cmd, env) == -1)
+	{
+		message_error = ft_strjoin("zsh: command not found: ", cmd);
+		ft_error(message_error);
+		free(message_error);
+		exit(1);
 		return (/* free_split(paths_splited),  */free(paths), -1);
+	}
+	
 	// free_split(paths_splited);
 	free(paths);
 	return (0);
