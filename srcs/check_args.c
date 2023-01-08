@@ -1,26 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   check_args.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmrabet <mmrabet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/01 16:14:53 by mmrabet           #+#    #+#             */
-/*   Updated: 2023/01/01 16:14:53 by mmrabet          ###   ########.fr       */
+/*   Created: 2023/01/08 11:50:50 by mmrabet           #+#    #+#             */
+/*   Updated: 2023/01/08 11:50:50 by mmrabet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./pipex.h"
 
-int	main(int argc, char **argv, char **envp)
+int	has_heredoc(char *first_arg)
 {
-	t_pipex	pipex;
-	int		nb;
+	if (first_arg != NULL)
+	{
+		if (ft_strncmp("here_doc", first_arg, 9) == 0)
+			return (1);
+		return (0);
+	}
+	return (0);
+}
 
-	(void)envp;
-	if (check_args(argc, argv, &pipex) == -1)
-		return (ft_error("Invalid number of args."), -1);
-	open_src(argv, &pipex);
-	nb = argc - 3 - pipex.here_doc;
+int	check_args(int argc, char **argv, t_pipex *data)
+{
+	if (has_heredoc(argv[1]))
+	{
+		data->here_doc = 1;
+		if (argc < 6)
+			return (-1);
+	}
+	else
+	{
+		data->here_doc = 0;
+		if (argc < 5)
+			return (-1);
+	}
 	return (0);
 }

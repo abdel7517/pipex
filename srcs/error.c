@@ -1,26 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmrabet <mmrabet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/01 16:14:53 by mmrabet           #+#    #+#             */
-/*   Updated: 2023/01/01 16:14:53 by mmrabet          ###   ########.fr       */
+/*   Created: 2023/01/08 12:06:22 by mmrabet           #+#    #+#             */
+/*   Updated: 2023/01/08 12:06:22 by mmrabet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./pipex.h"
 
-int	main(int argc, char **argv, char **envp)
+void	ft_error(char *str)
 {
-	t_pipex	pipex;
-	int		nb;
+	ft_putendl_fd(str, 2);
+}
 
-	(void)envp;
-	if (check_args(argc, argv, &pipex) == -1)
-		return (ft_error("Invalid number of args."), -1);
-	open_src(argv, &pipex);
-	nb = argc - 3 - pipex.here_doc;
-	return (0);
+void	ex_err(char *str)
+{
+	perror(str);
+	exit (1);
 }

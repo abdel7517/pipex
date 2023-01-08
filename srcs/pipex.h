@@ -26,4 +26,26 @@
 # include "./../libft/libft.h"
 # include "./../ft_printf/ft_printf.h"
 
+typedef struct s_pipex
+{
+	pid_t	pid;
+	char	**cmd_path;
+	char	**cmd_args;
+	char	*envp;
+	char	*cmd;
+	int		here_doc;
+	int		infile;
+	int		outfile;
+	int		nb_cmd;
+	int		nb_pipe;
+	int		index;
+
+}	t_pipex;
+
+void	ft_error(char *str);
+int		check_args(int argc, char **argv, t_pipex *data);
+int		has_heredoc(char *first_arg);
+void	open_src(char **argv, t_pipex *data);
+void	ex_err(char *str);
+
 #endif

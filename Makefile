@@ -1,6 +1,10 @@
 # /* ~~~~~~ SOURCES ~~~~~~ */
 SRCS_DIR = ./srcs/
 SRCS =	main.c \
+		check_args.c \
+		file.c \
+		ft_putendl_fd.c \
+		error.c
 
 OBJS = ${addprefix ${SRCS_DIR}, ${SRCS:.c=.o}}
 
