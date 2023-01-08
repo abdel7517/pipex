@@ -33,7 +33,7 @@ typedef struct s_pipex
 	char	**cmd_args;
 	char	*envp;
 	char	*cmd;
-	int		pipes[][2];
+	int		*pipes;
 	int		*pids;
 	int		here_doc;
 	int		infile;
@@ -45,10 +45,12 @@ typedef struct s_pipex
 
 }	t_pipex;
 
+void	close_free_pipes_pids(t_pipex *data, int size);
 void	ft_error(char *str);
 int		check_args(int argc, char **argv, t_pipex *data);
 int		has_heredoc(char *first_arg);
 void	open_src(char **argv, t_pipex *data);
+void	open_dest(char *path, t_pipex *data);
 void	ex_err(char *str);
 
 #endif

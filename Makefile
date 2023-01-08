@@ -4,7 +4,8 @@ SRCS =	main.c \
 		check_args.c \
 		file.c \
 		ft_putendl_fd.c \
-		error.c
+		error.c \
+		free.c 
 
 OBJS = ${addprefix ${SRCS_DIR}, ${SRCS:.c=.o}}
 
