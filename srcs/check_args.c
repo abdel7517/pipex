@@ -49,3 +49,19 @@ char	**get_args(char *cmd)
 		return (NULL);
 	return (args);
 }
+
+void	error_message(char *paths, char **paths_splited, char *cmd)
+{
+	char	*message_error;
+
+	message_error = ft_strjoin("command not found: ", cmd);
+	if (message_error == NULL)
+	{
+		free(paths_splited);
+		free(paths);
+		ex_err("Error.");
+	}
+	ft_error(message_error);
+	free(message_error);
+	exit(1);
+}

@@ -55,5 +55,5 @@ int		check_access(char **paths_splited, char *cmd, char **env);
 int		check_path(char *path, char *cmd, char **env);
 int		find_path(char **env, char *cmd);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
-
+void	error_message(char *paths, char **paths_splited, char *cmd);
 #endif

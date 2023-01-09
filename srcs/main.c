@@ -19,7 +19,14 @@ int	pipex(int infile, char *cmd, char **env)
 
 	pipe(fd);
 	pid = fork();
-	if (pid == 0)
+	if (pid)
+	{
+		close(fd[1]);
+		dup2(fd[0], STDIN_FILENO);
+		waitpid(pid, NULL, 0);
+		return (0);
+	}
+	else
 	{
 		close(fd[0]);
 		dup2(fd[1], STDOUT_FILENO);
@@ -29,13 +36,6 @@ int	pipex(int infile, char *cmd, char **env)
 			check_cmd(cmd, env);
 		return (-1);
 	}
-	else
-	{
-		close(fd[1]);
-		dup2(fd[0], STDIN_FILENO);
-		waitpid(pid, NULL, 0);
-		return (0);
-	}
 	return (0);
 }
 
@@ -44,7 +44,7 @@ int	main(int argc, char **argv, char **envp)
 	t_pipex	data;
 	int		i;
 
-	i = 2;
+	i = 3;
 	if (check_args(argc, argv, &data) == -1)
 		return (ft_error("Invalid number of args."), -1);
 	data.nb_cmd = argc - 2 - data.here_doc;
