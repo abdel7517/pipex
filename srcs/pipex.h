@@ -42,6 +42,8 @@ void	ex_err(char *str);
 void	init_pipe(t_pipex *data);
 void	init(t_pipex *data);
 void	check_cmd(char *cmd, char **env);
+void	ft_putendl_fd(char *s, int fd);
+void	free_split(char **strs);
 char	**ft_split(char const *s, char c);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_strchr(const char *s, int c);
@@ -52,6 +54,5 @@ int		check_access(char **paths_splited, char *cmd, char **env);
 int		check_path(char *path, char *cmd, char **env);
 int		find_path(char **env, char *cmd);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
-void	ft_putendl_fd(char *s, int fd);
 
 #endif

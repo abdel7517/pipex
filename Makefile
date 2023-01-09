@@ -7,6 +7,7 @@ SRCS =	main.c \
 		ft_split.c \
 		error.c \
 		check.c \
+		free.c \
 
 OBJS = ${addprefix ${SRCS_DIR}, ${SRCS:.c=.o}}
 

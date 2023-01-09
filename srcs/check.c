@@ -27,6 +27,7 @@ int	check_access(char **paths_splited, char *cmd, char **env)
 		cmd_path = ft_strjoin(path, cmd);
 		if (access(cmd_path, X_OK) == 0)
 		{
+			free_split(paths_splited);
 			execve(cmd_path, arg, env);
 			ex_err(cmd_path);
 		}
@@ -34,6 +35,7 @@ int	check_access(char **paths_splited, char *cmd, char **env)
 		free(path);
 		i++;
 	}
+	free_split(paths_splited);
 	return (-1);
 }
 
@@ -47,15 +49,15 @@ int	check_path(char *path, char *cmd, char **env)
 	if (paths == NULL)
 		return (-1);
 	paths_splited = ft_split(paths, ':');
+	free(paths);
 	if (check_access(paths_splited, cmd, env) == -1)
 	{
 		message_error = ft_strjoin("command not found: ", cmd);
 		ft_error(message_error);
 		free(message_error);
 		exit(1);
-		return (free(paths), -1);
+		return (1);
 	}
-	free(paths);
 	return (0);
 }
 
