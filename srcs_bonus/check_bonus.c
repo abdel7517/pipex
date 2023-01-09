@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./pipex.h"
+#include "./pipex_bonus.h"
 
 void	exec_path(char **paths_splited, char **env, char **args)
 {

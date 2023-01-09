@@ -11,6 +11,19 @@ SRCS =	main.c \
 
 OBJS = ${addprefix ${SRCS_DIR}, ${SRCS:.c=.o}}
 
+# /* ~~~~~~ SOURCES BONUS ~~~~~~ */
+SRCS_BONUS_DIR = ./srcs_bonus/
+SRCS_BONUS =	main_bonus.c \
+		check_args_bonus.c \
+		file_bonus.c \
+		utils_bonus.c \
+		ft_split_bonus.c \
+		error_bonus.c \
+		check_bonus.c \
+		free_bonus.c \
+
+OBJS_BONUS = ${addprefix ${SRCS_BONUS_DIR}, ${SRCS_BONUS:.c=.o}}
+
 # /* ~~~~~~~ COMPILING INFO ~~~~~~~ */
 CC = cc
 CFLAGS = -Wall -Werror -Wextra -g
@@ -47,4 +60,22 @@ fclean: clean
 
 re: 	fclean all
 
-.PHONY: all clean fclean re
+all_bonus:	${NAME}
+
+bonus: $(OBJS_BONUS)
+	@echo $(CYAN) " - Compiling $@" $(RED)
+	@$(CC) $(CFLAGS) $(OBJS_BONUS) -o $(NAME)
+	@echo $(GREEN) "[OK COMPILED BONUS]" $(EOC)
+	@echo $(GREEN) "[LAUNCH PROGRAMM]" $(EOC)
+
+clean_bonus:
+		@echo $(PURPLE) "[🧹Cleaning...🧹]" $(EOC)
+		@${RM} ${OBJS_BONUS} ${NAME}
+
+fclean_bonus: clean
+		@echo $(PURPLE) "[🧹FCleaning...🧹]" $(EOC)
+		@${RM} ${OBJS_BONUS} ${NAME}
+
+re_bonus: 	fclean_bonus all_bonus
+
+.PHONY: all clean fclean re bonus all_bonus clean_bonus fclean_bonus re_bonus
