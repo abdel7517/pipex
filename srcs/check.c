@@ -17,18 +17,18 @@ int	check_access(char **paths_splited, char *cmd, char **env)
 	int		i;
 	char	*path;
 	char	*cmd_path;
-	char	**arg;
+	char	**args;
 
-	arg = NULL;
+	args = get_args(cmd);
 	i = 0;
 	while (paths_splited[i])
 	{
 		path = ft_strjoin(paths_splited[i], "/");
-		cmd_path = ft_strjoin(path, cmd);
+		cmd_path = ft_strjoin(path, args[0]);
 		if (access(cmd_path, X_OK) == 0)
 		{
 			free_split(paths_splited);
-			execve(cmd_path, arg, env);
+			execve(cmd_path, args, env);
 			ex_err(cmd_path);
 		}
 		free(cmd_path);
@@ -36,6 +36,7 @@ int	check_access(char **paths_splited, char *cmd, char **env)
 		i++;
 	}
 	free_split(paths_splited);
+	free_split(args);
 	return (-1);
 }
 

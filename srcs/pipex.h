@@ -48,6 +48,7 @@ char	**ft_split(char const *s, char c);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_strchr(const char *s, int c);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
+char	**get_args(char *cmd);
 int		check_args(int argc, char **argv, t_pipex *data);
 int		has_heredoc(char *first_arg);
 int		check_access(char **paths_splited, char *cmd, char **env);

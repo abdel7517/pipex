@@ -39,3 +39,13 @@ int	check_args(int argc, char **argv, t_pipex *data)
 	}
 	return (0);
 }
+
+char	**get_args(char *cmd)
+{
+	char	**args;
+
+	args = ft_split(cmd, ' ');
+	if (args == NULL)
+		return (NULL);
+	return (args);
+}
