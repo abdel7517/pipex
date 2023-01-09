@@ -23,34 +23,35 @@
 # include <errno.h>
 # include <sys/types.h>
 # include <sys/wait.h>
-# include "./../libft/libft.h"
-# include "./../ft_printf/ft_printf.h"
 
 typedef struct s_pipex
 {
-	pid_t	pid;
-	char	**cmd_path;
-	char	**cmd_args;
-	char	*envp;
-	char	*cmd;
-	int		*pipes;
-	int		*pids;
 	int		here_doc;
 	int		infile;
 	int		outfile;
 	int		nb_cmd;
-	int		nb_pipes;
-	int		nb_pids;
-	int		index;
 
 }	t_pipex;
 
+size_t	ft_strlen(const char *s);
 void	close_free_pipes_pids(t_pipex *data, int size);
 void	ft_error(char *str);
-int		check_args(int argc, char **argv, t_pipex *data);
-int		has_heredoc(char *first_arg);
 void	open_src(char **argv, t_pipex *data);
 void	open_dest(char *path, t_pipex *data);
 void	ex_err(char *str);
+void	init_pipe(t_pipex *data);
+void	init(t_pipex *data);
+void	check_cmd(char *cmd, char **env);
+char	**ft_split(char const *s, char c);
+char	*ft_strjoin(char const *s1, char const *s2);
+char	*ft_strchr(const char *s, int c);
+char	*ft_substr(char const *s, unsigned int start, size_t len);
+int		check_args(int argc, char **argv, t_pipex *data);
+int		has_heredoc(char *first_arg);
+int		check_access(char **paths_splited, char *cmd, char **env);
+int		check_path(char *path, char *cmd, char **env);
+int		find_path(char **env, char *cmd);
+int		ft_strncmp(const char *s1, const char *s2, size_t n);
+void	ft_putendl_fd(char *s, int fd);
 
 #endif

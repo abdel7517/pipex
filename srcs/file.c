@@ -14,6 +14,7 @@
 
 void	open_src(char **argv, t_pipex *data)
 {	
+	data->infile = 0;
 	if (data->here_doc)
 	{
 		ft_error("HERE DOC");
