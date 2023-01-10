@@ -47,6 +47,8 @@ int	main(int argc, char **argv, char **envp)
 	i = 3;
 	if (check_args(argc, argv, &data) == -1)
 		return (ft_error("Invalid number of args."), -1);
+	if (envp[0] == NULL)
+		return (ft_error("Env is empty"), -1);
 	data.nb_cmd = argc - 2 - data.here_doc;
 	if (data.here_doc == 0)
 	{
@@ -56,10 +58,7 @@ int	main(int argc, char **argv, char **envp)
 		dup2(data.outfile, STDOUT_FILENO);
 		pipex(data.infile, argv[2], envp);
 		while (i < data.nb_cmd)
-		{
-			pipex(data.infile, argv[i], envp);
-			i++;
-		}
+			pipex(data.infile, argv[i++], envp);
 		check_cmd(argv[data.nb_cmd], envp);
 	}
 	else
